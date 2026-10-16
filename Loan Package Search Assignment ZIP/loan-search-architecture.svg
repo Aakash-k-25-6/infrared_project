@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="800" viewBox="0 0 1500 800" role="img" aria-labelledby="title desc">
+  <title id="title">Loan Package Search architecture</title>
+  <desc id="desc">PDF and OCR layout text feed a page-level Lucene index. The browser calls a Spring Boot API for package details, search results, and page navigation.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5efff"/><stop offset=".52" stop-color="#fff2eb"/><stop offset="1" stop-color="#ffe9ed"/></linearGradient>
+    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8c5be7"/><stop offset="1" stop-color="#6536b5"/></linearGradient>
+    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffad72"/><stop offset="1" stop-color="#f27659"/></linearGradient>
+    <linearGradient id="rose" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f18ba1"/><stop offset="1" stop-color="#db527b"/></linearGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6ad1bd"/><stop offset="1" stop-color="#29a98e"/></linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="13" flood-color="#593b7a" flood-opacity=".12"/></filter>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#8054ce"/></marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#ee825f"/></marker>
+    <marker id="arrowRose" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#d96885"/></marker>
+    <style>
+      .title{font:700 30px 'DM Sans',Arial,sans-serif;fill:#2f2146}.subtitle{font:400 15px 'DM Sans',Arial,sans-serif;fill:#786b89}.card-title{font:700 18px 'DM Sans',Arial,sans-serif;fill:#38284f}.card-sub{font:400 13px 'DM Sans',Arial,sans-serif;fill:#7c718a}.label{font:700 11px 'DM Sans',Arial,sans-serif;letter-spacing:1.1px;fill:#8a7a9a}.item{font:600 13px 'DM Sans',Arial,sans-serif;fill:#514360}.small{font:400 11px 'DM Sans',Arial,sans-serif;fill:#81778c}.edge-label{font:600 11px 'DM Sans',Arial,sans-serif;fill:#76568e}
+    </style>
+  </defs>
+  <rect width="1500" height="800" rx="30" fill="url(#bg)"/>
+  <circle cx="1370" cy="105" r="95" fill="#f5d4e2" opacity=".42"/><circle cx="100" cy="710" r="125" fill="#d9c9ff" opacity=".34"/>
+  <text x="70" y="76" class="label">LOW-LEVEL DESIGN</text>
+  <text x="70" y="120" class="title">From loan package to page-level search</text>
+  <text x="70" y="151" class="subtitle">One indexed record per page keeps results precise, ranked, and easy to open in context.</text>
+
+  <!-- Connectors are behind the cards. -->
+  <path d="M286 330H342" fill="none" stroke="#8054ce" stroke-width="3" marker-end="url(#arrowPurple)"/>
+  <text x="290" y="188" class="edge-label">extract page text</text>
+  <path d="M558 330H614" fill="none" stroke="#8054ce" stroke-width="3" marker-end="url(#arrowPurple)"/>
+  <text x="565" y="188" class="edge-label">one record / page</text>
+  <path d="M832 330H888" fill="none" stroke="#8054ce" stroke-width="3" marker-end="url(#arrowPurple)"/>
+  <text x="842" y="188" class="edge-label">query + results</text>
+  <path d="M1118 330H1174" fill="none" stroke="#8054ce" stroke-width="3" marker-end="url(#arrowPurple)"/>
+  <text x="1129" y="188" class="edge-label">render results</text>
+  <path d="M178 418V555H1242V418" fill="none" stroke="#ee825f" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#arrowOrange)"/>
+  <rect x="555" y="535" width="310" height="38" rx="19" fill="#fff8f3" stroke="#f3c3ad"/>
+  <text x="710" y="559" text-anchor="middle" class="edge-label" fill="#b45c42">original PDF served for exact-page viewing</text>
+
+  <!-- Input card -->
+  <g filter="url(#shadow)"><rect x="60" y="205" width="226" height="245" rx="22" fill="#fff" stroke="#eadcf6"/></g>
+  <rect x="82" y="228" width="44" height="44" rx="14" fill="url(#orange)"/>
+  <path d="M96 238h13l7 7v17H96z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><path d="M109 238v8h7M100 251h11M100 256h11" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="82" y="306" class="card-title">Package inputs</text>
+  <text x="82" y="334" class="item">Original loan PDF</text>
+  <text x="82" y="355" class="card-sub">page preview source</text>
+  <line x1="82" y1="376" x2="264" y2="376" stroke="#eee7f3"/>
+  <text x="82" y="402" class="item">Layout text / OCR</text>
+  <text x="82" y="423" class="card-sub">PDFBox fallback extraction</text>
+
+  <!-- Index service card -->
+  <g filter="url(#shadow)"><rect x="342" y="205" width="216" height="245" rx="22" fill="#fff" stroke="#e3d6f2"/></g>
+  <rect x="364" y="228" width="44" height="44" rx="14" fill="url(#purple)"/>
+  <path d="M377 241h18v18h-18zM381 237h18v18M373 245h18v18" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
+  <text x="364" y="306" class="card-title">PackageIndex</text>
+  <text x="364" y="336" class="card-sub">Builds and refreshes a</text>
+  <text x="364" y="355" class="card-sub">complete index snapshot.</text>
+  <rect x="364" y="386" width="169" height="37" rx="12" fill="#f2ebff"/>
+  <circle cx="382" cy="404" r="5" fill="#8054ce"/><text x="396" y="408" class="small">reused between searches</text>
+
+  <!-- Index card -->
+  <g filter="url(#shadow)"><rect x="614" y="205" width="218" height="245" rx="22" fill="#fff" stroke="#e4d6ef"/></g>
+  <rect x="636" y="228" width="44" height="44" rx="14" fill="url(#mint)"/>
+  <ellipse cx="658" cy="240" rx="12" ry="5" fill="none" stroke="#fff" stroke-width="1.8"/><path d="M646 240v15c0 3 5 5 12 5s12-2 12-5v-15M646 247c0 3 5 5 12 5s12-2 12-5" fill="none" stroke="#fff" stroke-width="1.8"/>
+  <text x="636" y="306" class="card-title">Lucene index</text>
+  <text x="636" y="336" class="card-sub">In-memory, page-level</text>
+  <text x="636" y="355" class="card-sub">documents with searchable</text>
+  <text x="636" y="374" class="card-sub">text and source metadata.</text>
+  <rect x="636" y="395" width="174" height="28" rx="10" fill="#e9f8f3"/>
+  <text x="723" y="413" text-anchor="middle" class="small">rank · phrase · Boolean · prefix</text>
+
+  <!-- API card -->
+  <g filter="url(#shadow)"><rect x="888" y="205" width="230" height="245" rx="22" fill="#fff" stroke="#eed8dc"/></g>
+  <rect x="910" y="228" width="44" height="44" rx="14" fill="url(#rose)"/>
+  <path d="M923 240l-6 10 6 10M941 240l6 10-6 10M936 237l-8 26" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="910" y="306" class="card-title">Spring Boot API</text>
+  <text x="910" y="336" class="item">GET /api/package</text>
+  <text x="910" y="357" class="item">GET /api/search</text>
+  <text x="910" y="378" class="item">GET /api/pages/{id}</text>
+  <text x="910" y="399" class="item">GET /api/pdf</text>
+  <text x="910" y="425" class="card-sub">timings · pagination · snippets</text>
+
+  <!-- UI card -->
+  <g filter="url(#shadow)"><rect x="1174" y="205" width="266" height="245" rx="22" fill="#fff" stroke="#f0d5dd"/></g>
+  <rect x="1196" y="228" width="44" height="44" rx="14" fill="url(#orange)"/>
+  <rect x="1205" y="237" width="26" height="18" rx="3" fill="none" stroke="#fff" stroke-width="1.8"/><path d="M1205 242h26M1213 259h10M1218 255v4" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="1196" y="306" class="card-title">Browser workspace</text>
+  <rect x="1196" y="326" width="220" height="39" rx="11" fill="#f2eaff"/><circle cx="1214" cy="345" r="6" fill="none" stroke="#8451d2" stroke-width="2"/><path d="M1218 349l5 5" stroke="#8451d2" stroke-width="2" stroke-linecap="round"/><text x="1232" y="349" class="small">query + filters</text>
+  <rect x="1196" y="375" width="104" height="48" rx="11" fill="#fff0e9"/><text x="1208" y="395" class="small">Ranked hits</text><text x="1208" y="412" class="small">snippets + pages</text>
+  <rect x="1310" y="375" width="106" height="48" rx="11" fill="#ffe9ee"/><text x="1322" y="395" class="small">PDF viewer</text><text x="1322" y="412" class="small">jump to page</text>
+
+  <text x="70" y="680" class="label">REQUEST FLOW</text>
+  <text x="70" y="710" class="subtitle">The first request builds the index; subsequent searches reuse it. Input changes trigger a refreshed snapshot.</text>
+  <rect x="70" y="738" width="1360" height="1" fill="#d8c8e5" opacity=".8"/>
+  <circle cx="78" cy="767" r="5" fill="#8150d1"/><text x="92" y="771" class="small">Search results include document, version, page, score, and highlighted snippet.</text>
+  <circle cx="795" cy="767" r="5" fill="#ef805f"/><text x="809" y="771" class="small">Opening a hit loads the original PDF at the matching page.</text>
+</svg>
